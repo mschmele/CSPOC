@@ -4,26 +4,26 @@
 (def select-values (comp vals select-keys))
 
 (defn get-account-from-id
-  [id]
+  [accounts id]
   (first (filter #(= (% :id) id) accounts)))
 
 (defn account-balance
-  [id]
-  (first (select-values (get-account-from-id id) [:balance])))
+  [accounts id]
+  (first (select-values (get-account-from-id accounts id) [:balance])))
 
 (defn deposit [amount account]
   (update (get-account-from-id account) :balance + amount))
 
 (defn withdraw
-  "Basic withdraw function. Does NOT handle validation."
-  [amount account]
-  (update (get-account-from-id account) :balance - amount))
+ "Basic withdraw function. Does NOT handle validation."
+ [amount account]
+ (update (get-account-from-id account) :balance - amount))
 
 (defn transfer
   "Transfer money from one account to another.
    Returns the updated accounts collection."
-  [from-id to-id amount]
-  (if (< (account-balance from-id) amount)
+  [accounts from-id to-id amount]
+  (if (< (account-balance accounts from-id) amount)
       (println "This will cause an overdraft!")
       (do
        (withdraw amount from-id)

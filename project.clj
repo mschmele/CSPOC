@@ -1,9 +1,12 @@
 (defproject cspoc "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "A Proof-Of-Concept Clojure app to test clojure.spec"
+  :url "https://github.com/jasongilman/proto-repl-demo"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.8.0"]]
-  :main ^:skip-aot cspoc.core
-  :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                 [proto-repl "0.3.1"]
+                 [proto-repl-charts "0.3.1"]]
+
+  :profiles
+  {:dev {:source-paths ["dev" "src" "test"]
+         :dependencies [[org.clojure/tools.namespace "0.2.11"]]}})
