@@ -1,7 +1,7 @@
 (ns cspoc.core
   (:gen-class))
 
-(defn select-values (comp vals select-keys))
+(def select-values (comp vals select-keys))
 
 (defn get-account-from-id
   [id]
@@ -9,7 +9,7 @@
 
 (defn account-balance
   [id]
-  (first (select-values (get-account-from-id accounts id) [:balance])))
+  (first (select-values (get-account-from-id id) [:balance])))
 
 (defn deposit [amount account]
   (update (get-account-from-id account) :balance + amount))
@@ -23,12 +23,11 @@
   "Transfer money from one account to another.
    Returns the updated accounts collection."
   [from-id to-id amount]
-  (if (< (account-balance accounts from-id) amount)
+  (if (< (account-balance from-id) amount)
       (println "This will cause an overdraft!")
       (do
        (withdraw amount from-id)
        (deposit amount to-id))))
-
 
 (def accounts
   [{:id "jason" :balance 100}
