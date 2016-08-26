@@ -4,11 +4,9 @@
 
 (def select-values (comp vals select-keys))
 
-
 (defn get-account-from-id
   [accounts id]
   (first (filter #(= (% :id) id) accounts)))
-
 
 (defn account-balance
   [accounts id]
@@ -18,12 +16,10 @@
   [amount account]
   (update account :balance + amount))
 
-
 (defn withdraw
  "Basic withdraw function. Does NOT handle validation."
  [amount account]
  (update account :balance - amount))
-
 
 (defn transfer
   "Transfer money from one account to another.
