@@ -1,36 +1,36 @@
 (ns cspoc.core
-  (:gen-class))
-(require '[clojure.spec :as s])
+  (:gen-class)
+  (:require [clojure.spec :as s]))
 
 (def select-values (comp vals select-keys))
 
-(defn get-account-from-id
-  [accounts id]
+(defn get-account-from-id [accounts id]
+  (s/assert string? id)
+  (s/assert vector? accounts)
   (first (filter #(= (% :id) id) accounts)))
 
-(defn account-balance
-  [accounts id]
+(defn account-balance [accounts id]
+  (s/assert string? id)
+  (s/assert vector? accounts)
   (first (select-values (get-account-from-id accounts id) [:balance])))
 
-(defn deposit
-  [amount account]
+(defn deposit [amount account]
+  (s/assert number? amount)
+  (s/assert map? account)
   (update account :balance + amount))
 
-(defn withdraw
- "Basic withdraw function. Does NOT handle validation."
- [amount account]
- (update account :balance - amount))
+(defn withdraw [amount account]
+  (s/assert number? amount)
+  (s/assert map? account)
+  (s/assert (> (account :balance) amount))
+  (update account :balance - amount))
 
-(defn transfer
+(defn transfer [accounts from-id to-id amount]
   "Transfer money from one account to another.
    Returns the updated accounts collection."
-  [accounts from-id to-id amount]
-  (if (< (account-balance accounts from-id) amount)
-      (println "This will cause an overdraft!")
-      (do
-       (conj '[]
+      (conj '[]
          (withdraw amount (get-account-from-id accounts from-id))
-         (deposit amount (get-account-from-id accounts to-id))))))
+         (deposit amount (get-account-from-id accounts to-id))))
 
 ; This is just a bit of test data. Nothing to see here
 (def accounts
