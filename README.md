@@ -1,20 +1,23 @@
 # cspoc
 
-A Proof-Of-Concept Clojure app to test `clojure.spec`
+A little demo app to test and learn about `clojure.spec`
 
-## Installation
+## Project setup
 
-Download from http://example.com/FIXME.
+- I'm using Leinengen, but chances are that you are as well. 
+- If you're a fan of atom, the Proto-repl dependencies are already included.
+- `clojure.spec` currently uses an alpha build of the language, but simply starting your repl in the project directory will handle all of that downloading and installing nonsense. Isn't that nice?
 
-## Usage
 
-FIXME: explanation
+## Helpful Links
 
-    $ java -jar cspoc-0.1.0-standalone.jar [args]
+Rationale and overview: http://clojure.org/about/spec
 
-## License
+Blog post with examples: http://blog.klipse.tech/clojure/2016/05/30/spec.html
 
-Copyright © 2016 FIXME
+Introductory video (also with examples): https://lambdaisland.com/episodes/clojure-spec
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+
+## License 
+
+Use this however you want! This is just for learning purposes.
