@@ -22,7 +22,7 @@
                (s/assert map? ::account)]
         :ret map?)
 
-(s/fdef cposc/transfter
+(s/fdef cposc/transfer
         :args [(s/assert vector? ::accounts)
                (s/assert string? ::from-id)
                (s/assert string? ::to-id)
