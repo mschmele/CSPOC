@@ -1,4 +1,4 @@
-;; Here is a simple little banking app that with simple specs
+;; Here is a simple little banking app with simple specs
 ;; To test all spec'd functions in a namespace, simply run (stest/check)
 
 (ns cspoc.core
