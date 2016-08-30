@@ -28,6 +28,3 @@
                (s/assert string? ::to-id)
                (s/assert number? ::amount)]
         :ret vector?)
-
-
-

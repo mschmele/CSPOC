@@ -22,7 +22,10 @@
   (conj '[]
     (withdraw amount (get-account-from-id accounts from-id))
     (deposit amount (get-account-from-id accounts to-id))
-    (filter #(= ) accounts)))
+    (filter
+     #(and
+       (not= from-id (% :id)) (not= to-id (% :id)))
+     accounts)))
 
 ; This is just a bit of test data. Nothing to see here
 (def accounts
