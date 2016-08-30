@@ -17,6 +17,8 @@ Blog post with examples: http://blog.klipse.tech/clojure/2016/05/30/spec.html
 
 Introductory video (also with examples): https://lambdaisland.com/episodes/clojure-spec
 
+ghoseb's gist of examples: https://gist.github.com/ghoseb/9f81ca592a56c23a4f7564e813d23ea5
+
 
 ## License 
 
