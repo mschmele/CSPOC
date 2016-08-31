@@ -19,6 +19,11 @@ Introductory video (also with examples): https://lambdaisland.com/episodes/cloju
 
 ghoseb's gist of examples: https://gist.github.com/ghoseb/9f81ca592a56c23a4f7564e813d23ea5
 
+A great collection of screencasts from Stuart Halloway: (
+  https://www.youtube.com/watch?v=nqY4nUMfus8
+  https://www.youtube.com/watch?v=WoFkhE92fqc
+  https://www.youtube.com/watch?v=W6crrbF7s2s )
+
 
 ## License 
 
