@@ -42,13 +42,10 @@
 
 ;; Here is an account. It is a map that requires an id and balance.
 ;; The type field is optional according to this spec.
-(s/def ::id string?)
+(s/def ::id (s/cat :id (s/and string? #(not= % clojure.string/blank?))))
 (s/def ::balance number?)
-(s/def ::type string?)
-(s/def ::amount number?)
-(s/def ::account (s/keys :req [::id ::balance]
-                         :opt [::type]))
-
+(s/def ::amount nat-int?)
+(s/def ::account (s/map-of ::id ::balance))
 (s/def ::accounts (s/coll-of ::account))
 
 (s/fdef get-account-from-id
@@ -56,11 +53,11 @@
         ;; What about a valid account id?
         :args (s/cat :accounts ::accounts :id ::id)
         ;; Are we returning a valid account?
-        :ret #(s/valid? ::account %))
+        :ret (s/nilable ::account))
 
 (s/fdef account-balance
         :args (s/cat :accounts ::accounts :id ::id)
-        :ret number?)
+        :ret ::balance)
 
 (s/fdef deposit
         :args (s/cat :amount ::amount :account ::account)
@@ -77,4 +74,6 @@
                :to-id ::id
                :amount ::amount)
         :ret ::accounts
-        :fn #(< ::amount (account-balance ::accounts ::from-id)))
+        :fn (s/or
+             :not-found #(nil? (:ret %))
+             :found #(< :amount (account-balance :accounts :from-id))))
