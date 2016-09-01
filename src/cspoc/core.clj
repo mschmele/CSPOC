@@ -16,7 +16,9 @@
 
 (defn account-balance [accounts id]
   "Selects an account from a given id and returns its balance"
-  (first (select-values (get-account-from-id accounts id) [:balance])))
+  (if (or nil? accounts id)
+    nil
+    (first (select-values (get-account-from-id accounts id) [:balance]))))
 
 (defn deposit [amount account]
   "Deposit given amount into given account"
@@ -67,20 +69,20 @@
         ;; Are we getting a valid collection of accounts?
         ;; What about a valid account id?
         :args (s/cat :accounts ::accounts :id ::id)
-        ;; Are we returning a valid account?
+        ;; Return a valid account, or nil if one is not found
         :ret (s/nilable ::account))
 
 (s/fdef account-balance
         :args (s/cat :accounts ::accounts :id ::id)
-        :ret ::balance)
+        :ret (s/nilable ::balance))
 
 (s/fdef deposit
         :args (s/cat :amount ::amount :account ::account)
-        :ret ::account)
+        :ret (s/nilable ::account))
 
 (s/fdef withdraw
         :args (s/cat :amount ::amount :account ::account)
-        :ret ::account)
+        :ret (s/nilable ::account))
 
 (s/fdef transfer
         :args (s/cat
@@ -88,7 +90,7 @@
                :from-id ::id
                :to-id ::id
                :amount ::amount)
-        :ret ::accounts
+        :ret (s/nilable ::accounts)
         :fn (s/or
              :not-found #(nil? (:ret %))
              :found #(< :amount (account-balance :accounts :from-id))))
