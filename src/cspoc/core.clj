@@ -60,7 +60,7 @@
 (s/def ::id (s/cat :id (s/and string? #(not= % clojure.string/blank?))))
 (s/def ::balance number?)
 (s/def ::amount nat-int?)
-(s/def ::account (s/map-of ::id ::balance))
+(s/def ::account (s/keys :req-un [::id ::balance]))
 (s/def ::accounts (s/coll-of ::account))
 
 (s/fdef get-account-from-id
@@ -72,15 +72,15 @@
 
 (s/fdef account-balance
         :args (s/cat :accounts ::accounts :id ::id)
-        :ret (s/nilable ::balance))
+        :ret ::balance)
 
 (s/fdef deposit
         :args (s/cat :amount ::amount :account ::account)
-        :ret (s/nilable ::account))
+        :ret ::account)
 
 (s/fdef withdraw
         :args (s/cat :amount ::amount :account ::account)
-        :ret (s/nilable ::account))
+        :ret ::account)
 
 (s/fdef transfer
         :args (s/cat
@@ -88,7 +88,7 @@
                :from-id ::id
                :to-id ::id
                :amount ::amount)
-        :ret (s/nilable ::accounts)
+        :ret ::accounts
         :fn (s/or
              :not-found #(nil? (:ret %))
              :found #(< :amount (account-balance :accounts :from-id))))
