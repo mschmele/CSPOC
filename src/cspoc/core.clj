@@ -10,27 +10,42 @@
 (def select-values (comp vals select-keys))
 
 (defn get-account-from-id [accounts id]
+  "Returns a desired account from a given id.
+   Returns nil if none is found."
   (first (filter #(= (% :id) id) accounts)))
 
 (defn account-balance [accounts id]
+  "Selects an account from a given id and returns its balance"
   (first (select-values (get-account-from-id accounts id) [:balance])))
 
 (defn deposit [amount account]
-  (update account :balance + amount))
+  "Deposit given amount into given account"
+  (if (or nil? amount account)
+    nil
+    (update account :balance + amount)))
 
 (defn withdraw [amount account]
-  (update account :balance - amount))
+  "Withdraw given amount from given account"
+  (if (or nil? amount account)
+    nil
+    (update account :balance - amount)))
 
 (defn transfer [accounts from-id to-id amount]
   "Transfer money from one account to another.
    Returns the updated accounts collection."
-  (conj '[]
-    (withdraw amount (get-account-from-id accounts from-id))
-    (deposit amount (get-account-from-id accounts to-id))
-    (filter
-     #(and
-       (not= from-id (% :id)) (not= to-id (% :id)))
-     accounts)))
+  (def from-account (get-account-from-id accounts from-id))
+  (def to-account (get-account-from-id accounts to-id))
+  (if (or nil? to-account from-account)
+    nil
+    (do
+     (conj '[]
+       (withdraw amount from-account)
+       (deposit amount to-account)
+       (filter
+        #(and
+          (not= from-id (% :id)) (not= to-id (% :id)))
+        accounts)))))
+
 
 ; This is just a bit of test data. Nothing to see here
 (def accounts
@@ -57,15 +72,15 @@
 
 (s/fdef account-balance
         :args (s/cat :accounts ::accounts :id ::id)
-        :ret ::balance)
+        :ret (s/nilable ::balance))
 
 (s/fdef deposit
         :args (s/cat :amount ::amount :account ::account)
-        :ret ::account)
+        :ret (s/nilable ::account))
 
 (s/fdef withdraw
         :args (s/cat :amount ::amount :account ::account)
-        :ret ::account)
+        :ret (s/nilable ::account))
 
 (s/fdef transfer
         :args (s/cat
@@ -73,7 +88,7 @@
                :from-id ::id
                :to-id ::id
                :amount ::amount)
-        :ret ::accounts
+        :ret (s/nilable ::accounts)
         :fn (s/or
              :not-found #(nil? (:ret %))
              :found #(< :amount (account-balance :accounts :from-id))))
