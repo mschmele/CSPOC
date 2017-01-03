@@ -1,5 +1,7 @@
 ;; Here is a simple little banking app with simple specs
 ;; To test all spec'd functions in a namespace, simply run (stest/check)
+;; For a simplified test output,
+;; try (->> (stest/check) stest/summarize-results)
 
 (ns cspoc.core
   (:require
