@@ -11,6 +11,12 @@
 
 (def select-values (comp vals select-keys))
 
+; This is just a bit of test data. Nothing to see here
+(def accounts
+  [{:id "jason" :balance 100}
+   {:id "chris" :balance 0}
+   {:id "mark" :balance 50000}])
+
 (defn get-account-from-id [accounts id]
   "Returns a desired account from a given id.
    Returns nil if none is found."
@@ -18,7 +24,7 @@
 
 (defn account-balance [accounts id]
   "Selects an account from a given id and returns its balance"
-  (if (or nil? accounts id)
+  (if (or (= nil accounts id))
     nil
     (first (select-values (get-account-from-id accounts id) [:balance]))))
 
@@ -49,13 +55,6 @@
         #(and
           (not= from-id (% :id)) (not= to-id (% :id)))
         accounts)))))
-
-
-; This is just a bit of test data. Nothing to see here
-(def accounts
-  [{:id "jason" :balance 100}
-   {:id "chris" :balance 0}
-   {:id "mark" :balance 50000}])
 
 (s/check-asserts true)
 

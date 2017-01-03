@@ -3,5 +3,5 @@
             [cspoc.core :refer :all]))
 
 (deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+  (testing "SHOW ME THE MONEY"
+    (is (= (account-balance accounts "jason") 100))))
