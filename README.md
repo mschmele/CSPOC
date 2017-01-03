@@ -2,6 +2,8 @@
 
 A little demo app to test and learn about `clojure.spec`
 
+[![Build Status](https://travis-ci.org/mschmele/CSPOC.svg?branch=master)](https://travis-ci.org/mschmele/CSPOC.svg)
+
 ## Project setup
 
 - I'm using Leinengen, but chances are that you are as well.
